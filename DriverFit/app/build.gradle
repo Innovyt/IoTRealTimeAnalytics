@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+
+ext {
+    oltu_version = "1.0.1"
+    retrofit_version = "2.0.2"
+    swagger_annotations_version = "1.5.8"
+    junit_version = "4.12"
+    jodatime_version = "2.9.3"
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+    defaultConfig {
+        applicationId "innovyt.com.driverfit"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    defaultConfig {
+        // Enabling multidex support.
+        multiDexEnabled true
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:recyclerview-v7:23.0.+'
+    compile 'com.github.pires:obd-java-api:1.0-RC16'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.google.android.gms:play-services:10.2.0'
+    compile("com.squareup.retrofit2:retrofit:$retrofit_version")
+            {
+                exclude module: 'okhttp'
+            }
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile "com.squareup.retrofit2:converter-scalars:$retrofit_version"
+    compile("com.squareup.retrofit2:converter-gson:$retrofit_version")
+            {
+                exclude module: 'gson'
+            }
+    compile "io.swagger:swagger-annotations:$swagger_annotations_version"
+    provided "org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:$oltu_version"
+    compile "joda-time:joda-time:$jodatime_version"
+    testCompile 'junit:junit:4.12'
+    compile project(path: ':websocketClient')
+    compile project(path: ':websocketClient')
+}
